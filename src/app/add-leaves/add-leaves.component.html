@@ -1,0 +1,85 @@
+<div class="container">
+<h3>Add Tentative Leaves </h3>
+<div  id="myForm" style="min-height:530px;">   
+  <form [formGroup]="userForm" autocomplete=off (ngSubmit)="onSubmit()">
+  <div>
+    <label>
+      Full Name:
+      <input type="text"  class="form-control" formControlName="name" autocomplete="off"  required>
+    </label>
+  
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <label>
+      Email Id:
+      <input type="text" class="form-control"  formControlName="emailId" required>
+    </label>
+  
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    
+    <label>
+      Month:
+      <select  class="form-control"  formControlName="month" required>
+        <option *ngFor="let c of monthList" 
+        
+        value="{{c.id}}">{{c.name}}</option>
+     </select>
+     
+
+    </label>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    
+    <label>
+      Year
+      <select class="form-control"   formControlName="year" required>
+        <option *ngFor="let c of yearList"  value="{{c}}">{{c}}</option>
+     </select>
+</label>
+    </div>
+    <br/>
+<div>
+    <label>
+      Total Tentative Leave Dates
+      <input type="text" class="form-control"  formControlName="totalLeaves" required>
+      
+
+    </label>
+
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+    <label>
+       Tentative Leave Dates
+      <input type="text" class="form-control"  formControlName="leaveDates" required>
+    </label>
+
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+    <label>
+      Description
+     <input type="text" class="form-control"  formControlName="desc" required>
+   </label>
+
+   </div>
+   <br/>
+   <div>
+    <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid">Submit</button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button type="reset" class="btn btn-default" (click)="reset()">Reset</button>
+   </div>
+  </form>
+  <br/>
+
+  
+<div>
+<div *ngIf="successMsg && ; else elseBlock">
+    <p>Tentative leave Details Successfully Updated</p>
+    <a>Navigate to leave dae page</a>
+</div>
+<ng-template #elseBlock>
+    <p>Unable to update tentative leaves</p>
+    <p>Please contact admin</p>
+
+</ng-template>
+</div>
+
+
+</div>
