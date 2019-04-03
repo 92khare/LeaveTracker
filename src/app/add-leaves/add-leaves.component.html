@@ -62,17 +62,20 @@
    <br/>
    <div>
     <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid">Submit</button>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <button type="reset" class="btn btn-default" (click)="reset()">Reset</button>
+    
+    
    </div>
   </form>
   <br/>
 
   
-<div>
-<div *ngIf="successMsg && ; else elseBlock">
+<div *ngIf="msgBlock">
+<div *ngIf="successMsg   ; else elseBlock">
+    
     <p>Tentative leave Details Successfully Updated</p>
-    <a>Navigate to leave dae page</a>
+    <button type="button" class="btn btn-primary" routerLink="/users">Leave Details</button>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button type="button" class="btn btn-default" (click)="reset()">Reset Form</button>
 </div>
 <ng-template #elseBlock>
     <p>Unable to update tentative leaves</p>

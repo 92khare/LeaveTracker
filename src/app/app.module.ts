@@ -13,6 +13,7 @@ import { AddLeavesComponent } from './add-leaves/add-leaves.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import {HashLocationStrategy, Location, LocationStrategy} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     AngularFireDatabaseModule,
     ReactiveFormsModule
   ],
-  providers: [AppService],
+  
+  providers: [Location, {provide: LocationStrategy, useClass: HashLocationStrategy},AppService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

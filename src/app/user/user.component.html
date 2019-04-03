@@ -1,11 +1,84 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div class="container">
   
-    Hello world 
-  
-  
-   <br>
-   <button (click)="addData()">
-Add Data
-   </button>
+   <div>
+    <form [formGroup]="userForm" autocomplete=off (ngSubmit)="onSubmit()">
+        
+            <label>
+                Month:
+                <select  class="form-control"  formControlName="month" required>
+                  <option *ngFor="let c of monthList" 
+                  
+                  value="{{c.id}}">{{c.name}}</option>
+               </select>
+               
+          
+              </label>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+    <label>
+            Year :
+            <select class="form-control"   formControlName="year" required>
+              <option *ngFor="let c of yearList"  value="{{c}}">{{c}}</option>
+           </select>
+      </label>
+
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+      <label>
+               <button type="submit" class="btn btn-primary">Fetch Data</button>
+            
+        </label>
+      
+    </form>
+   </div>
+<br><br>
+<div *ngIf="showData">
+   <div class="row" *ngIf="dataListLength !=0 else elseblock1">
+        <div class="col-md-3" >
+            <label>Resource Names</label>
+            <div *ngFor="let obj of viewList" (click)="setSelected(obj)">
+            {{obj.name}}
+            </div>
+        </div>
+            <div class="col-md-9">
+                <div *ngIf="selectedResource==null else elseBlock" >
+                    Select the resource name from list to view the details
+                </div>
+                
+                 <ng-template #elseBlock>
+                        <label>Email Id :</label>{{selectedResource.emailId}}<br/>
+                        <label>Name :</label>{{selectedResource.name}}<br/><br/>
+                        <label>Leave Details :</label>
+                        <table class="table">
+                            <thead>
+                            <th>Total Leaves </th>
+                            <th>Leave Dates </th>
+                            <th>Leave Description </th>
+                            <th>Update Date </th>
+                            </thead>
+                            <tbody *ngFor="let leaveObj of selectedResource.leaveData">
+                                <td><tr>{{leaveObj.totalLeaves}}<tr></td>
+                                    <td><tr>{{leaveObj.leaveDates}}</tr></td>
+                               
+                                    <td><tr>{{leaveObj.leaveDesc}}</tr></td>
+                                    <td><tr>{{leaveObj.updateDate}}</tr></td>
+                               <!--     <tr><td>{{leaveObj.leaveDates}}</td></tr>
+                                <tr><td>{{leaveObj.leaveDesc}}</td></tr>
+                                <tr><td>{{leaveObj.updateDate}}</td></tr>-->
+                            </tbody>
+                            
+                        </table>
+                       <!-- <div *ngFor="let Leaveobj of selectedResource.leaveDataArray ">
+                            
+                        </div>-->
+                    </ng-template>
+            </div>
+
+   </div>
+   <ng-template #elseblock1> 
+       <p>No Records for the selected Month !!!!!!</p>
+   </ng-template>
+</div>
+
 </div>

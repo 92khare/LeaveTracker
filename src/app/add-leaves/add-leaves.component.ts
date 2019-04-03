@@ -15,6 +15,7 @@ export class AddLeavesComponent implements OnInit {
 
   leaveObject:any={};
   successMsg:boolean=false;
+  msgBlock:boolean=false;
   
   userForm = new FormGroup({
     name: new FormControl('',[Validators.required]),
@@ -50,6 +51,7 @@ export class AddLeavesComponent implements OnInit {
   ngOnInit() {
   }
 reset(){
+  this.userForm.reset();
   var dateToday=new Date();
     console.log(dateToday.getFullYear());
     console.log(dateToday.getMonth());
@@ -60,6 +62,9 @@ reset(){
     }else{
       monthCurrent="0"+((monthToday+1).toString());
     }
+    this.userForm.controls['year'].setValue(dateToday.getFullYear(), {onlySelf: true});
+  this.userForm.controls['month'].setValue(monthCurrent, {onlySelf: true});
+  this.msgBlock=false;
   
 }
   onSubmit() {
@@ -68,16 +73,17 @@ reset(){
     this.leaveObject={};
 
   let date=new Date();
- let dateToday =this.datepipe.transform(date, 'yyyy-MM-dd');
+ let dateToday =this.datepipe.transform(date, 'yyyy-MM-dd')+"  "+ date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
 
     this.leaveObject={
       "name":this.userForm.value.name,
       "emailId":this.userForm.value.emailId,
-      "updateDate":dateToday.toString() ,
+     
       "leaveDetails":{
         "totalLeaves":this.userForm.value.totalLeaves,
         "leaveDates":this.userForm.value.leaveDates,
-        "leaveDesc":this.userForm.value.hidesc
+        "leaveDesc":this.userForm.value.desc,
+        "updateDate":dateToday.toString() 
        
       }
     }
@@ -88,14 +94,27 @@ reset(){
   }
 
   addLeaveObject(obj){
+
+    try{
     var a=this.db.list('resources/'+this.userForm.value.month).push(
       obj
   
     );
 
   if(a.key){
+ this.msgBlock=true;   
 this.successMsg=true;
-  }  
+
+  }else{
+    this.msgBlock=true;  
+  } 
+}catch(e){
+  console.log(e);
+  this.msgBlock=true; 
+
+} 
+
+
   }  
 
 }
